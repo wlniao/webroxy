@@ -37,8 +37,25 @@ namespace TcpRouter
                     {
                         //短网址处理
                         var query = context.Request.QueryString.Value;
-                        await context.Response.WriteAsync(Wlniao.cvt.Hex52ToInt64(path).ToString());
-                        //context.Response.Redirect("http://www.baidu.com");
+                        try
+                        {
+                            var jsonStr = Wlniao.XServer.Common.GetResponseString("http://manage.wlniao.com/redirect?key=" + path);
+                            var jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<String, String>>(jsonStr);
+                            if (jsonObj != null && jsonObj.ContainsKey("url") && !string.IsNullOrEmpty(jsonObj["url"]))
+                            {
+                                if (jsonObj["url"].IndexOf('?') > 0)
+                                {
+                                    context.Response.Redirect(jsonObj["url"]);
+                                }
+                                else
+                                {
+                                    context.Response.Redirect(jsonObj["url"] + query);
+                                }
+                                return;
+                            }
+                        }
+                        catch { }
+                        await context.Response.WriteAsync("Request path \"/" + path + "\" not found!");
                     }
                 }
                 else

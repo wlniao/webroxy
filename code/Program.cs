@@ -12,14 +12,18 @@ namespace TcpRouter
             //System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             //Console.OutputEncoding = Encoding.Unicode;
             //先设定启动代理服务（延迟启动）
+
             new System.Threading.Thread(StartProxy).Start();
             //启动Web服务（用于Web代理的错误信息输出）
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseStartup<Startup>()
-                .UseUrls("http://*:6338")
+                .UseKestrel(o =>
+                {
+                    o.Listen(System.Net.IPAddress.IPv6Any, 6338);
+                })
                 .Build();
-            host.Run();            
+            host.Run();
         }
         /// <summary>
         /// 启动网站服务（用于Web代理的错误信息输出）

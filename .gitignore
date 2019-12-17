@@ -3,6 +3,7 @@
 *.txt
 *.log
 *.user
+/publish
 /*/.vs
 /*/obj
 /*/bin
