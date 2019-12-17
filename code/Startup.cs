@@ -31,7 +31,15 @@ namespace TcpRouter
                     path = path.Trim('/');
                     if (string.IsNullOrEmpty(path))
                     {
-                        await context.Response.WriteAsync(unkowndomain);
+                        if (context.Request.Host.Host == "wln.io")
+                        {
+                            context.Response.Redirect("https://www.wlniao.com/?from=wln.io");
+                            await context.Response.WriteAsync("");
+                        }
+                        else
+                        {
+                            await context.Response.WriteAsync(unkowndomain);
+                        }
                     }
                     else if (path.IndexOf('.') < 0 && path.IndexOf('/') < 0)
                     {
@@ -51,11 +59,10 @@ namespace TcpRouter
                                 {
                                     context.Response.Redirect(jsonObj["url"] + query);
                                 }
-                                return;
                             }
                         }
                         catch { }
-                        await context.Response.WriteAsync("Request path \"/" + path + "\" not found!");
+                        await context.Response.WriteAsync("Request /" + path);
                     }
                 }
                 else
