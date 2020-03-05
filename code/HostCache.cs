@@ -35,6 +35,10 @@ namespace TcpRouter
             if (!cache.ContainsKey(host))
             {
                 cache.Add(host, new HostCache());
+                if (Wlniao.strUtil.IsIP(host))
+                {
+                    RedirectCache.Put(host, "", Wlniao.DateTools.GetUnix() + 864000);
+                }
             }
             lock (cache[host])
             {
@@ -46,9 +50,9 @@ namespace TcpRouter
                     var ipEndPoint = DataApi.GetEndPointByHost(host, out EndPoint, out TrueHost, out CacheTime);
                     if (host == Proxy.ProxyHost || string.IsNullOrEmpty(EndPoint))
                     {
+                        cache[host].TrueHost = host;
                         if (host == Proxy.ProxyHost || host == "127.0.0.1" || host == "localhost")
                         {
-                            cache[host].TrueHost = host;
                             cache[host].UpdateTime = now + 86400 * 3652;
                         }
                         else

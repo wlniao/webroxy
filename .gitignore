@@ -3,6 +3,7 @@
 *.txt
 *.log
 *.user
+/.vs
 /publish
 /*/.vs
 /*/obj

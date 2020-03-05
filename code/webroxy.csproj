@@ -8,7 +8,7 @@
     <RuntimeFrameworkVersion>2.0.0</RuntimeFrameworkVersion>
   </PropertyGroup>  
   <ItemGroup>
-    <PackageReference Include="Wlniao.XCore" Version="2.1.24" />
+    <PackageReference Include="Wlniao.XCore" Version="2.2.2" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Dockerfile">

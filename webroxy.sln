@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webroxy", "code\webroxy.csproj", "{158D57E0-6C64-4941-9E50-04D5322A377D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{158D57E0-6C64-4941-9E50-04D5322A377D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{158D57E0-6C64-4941-9E50-04D5322A377D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{158D57E0-6C64-4941-9E50-04D5322A377D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{158D57E0-6C64-4941-9E50-04D5322A377D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {63D1FBC3-3FD9-4B1B-9DD2-150DAB2831B2}
+	EndGlobalSection
+EndGlobal

@@ -11,7 +11,7 @@ namespace TcpRouter
 {
     public class Startup
     {
-        private const string unkowndomain = "<html><head><title>Unknown Domain</title></head><body bgcolor=\"white\"><center><h1>Unknown Domain</h1></center><hr><center>ideploy</center></body></html>";
+        private const string unkowndomain = "<html><head><title>Unknown Domain</title></head><body bgcolor=\"white\"><center><h1>Unknown Domain</h1></center><hr><center>webroxy</center></body></html>";
         public Startup(IHostingEnvironment env)
         {
             FirstRequest();
@@ -31,14 +31,15 @@ namespace TcpRouter
                     path = path.Trim('/');
                     if (string.IsNullOrEmpty(path))
                     {
-                        if (context.Request.Host.Host == "wln.io")
+                        path = RedirectCache.Get(context.Request.Host.Host);
+                        if (string.IsNullOrEmpty(path))
                         {
-                            context.Response.Redirect("https://www.wlniao.com/?from=wln.io");
-                            await context.Response.WriteAsync("");
+                            await context.Response.WriteAsync(unkowndomain);
                         }
                         else
                         {
-                            await context.Response.WriteAsync(unkowndomain);
+                            context.Response.Redirect(path);
+                            await context.Response.WriteAsync("");
                         }
                     }
                     else if (path.IndexOf('.') < 0 && path.IndexOf('/') < 0)

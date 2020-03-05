@@ -28,6 +28,7 @@ namespace TcpRouter
             EndPoint = Wlniao.Config.GetEnvironment(Host);
             if (string.IsNullOrEmpty(EndPoint))
             {
+                CacheTime = 300;
                 #region 从DNS服务器读取配置
                 var dnsCNAME = dnsTool.GetCNAME(Host);
                 if (string.IsNullOrEmpty(dnsCNAME))
@@ -55,27 +56,34 @@ namespace TcpRouter
             }
             if (!string.IsNullOrEmpty(EndPoint))
             {
-                try
+                if (EndPoint.StartsWith("http://") || EndPoint.StartsWith("https://"))
                 {
-                    CacheTime = 600;
-                    var host = EndPoint;
-                    var port = 80;
-                    if (EndPoint.IndexOf(':') > 0)
-                    {
-                        var _host = EndPoint.Split(':');
-                        host = _host[0];
-                        port = Wlniao.Convert.ToInt(_host[1]);
-                    }
-                    if (Wlniao.Text.StringUtil.IsIP(host))
-                    {
-                        return new IPEndPoint(IPAddress.Parse(host), port);
-                    }
-                    else
-                    {
-                        return new IPEndPoint(dnsTool.GetIPAddress(host), port);
-                    }
+                    RedirectCache.Put(Host, EndPoint, CacheTime + Wlniao.DateTools.GetUnix());
+                    EndPoint = "";
                 }
-                catch { }
+                else
+                {
+                    try
+                    {
+                        var host = EndPoint;
+                        var port = 80;
+                        if (EndPoint.IndexOf(':') > 0)
+                        {
+                            var _host = EndPoint.Split(':');
+                            host = _host[0];
+                            port = Wlniao.Convert.ToInt(_host[1]);
+                        }
+                        if (Wlniao.Text.StringUtil.IsIP(host))
+                        {
+                            return new IPEndPoint(IPAddress.Parse(host), port);
+                        }
+                        else
+                        {
+                            return new IPEndPoint(dnsTool.GetIPAddress(host), port);
+                        }
+                    }
+                    catch { }
+                }
             }
             return ProxyWebEndPoint;
         }

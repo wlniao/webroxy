@@ -21,7 +21,7 @@ namespace TcpRouter
                     _ProxyHost = Wlniao.Config.GetSetting("ProxyHost");
                     if (string.IsNullOrEmpty(_ProxyHost))
                     {
-                        _ProxyHost = "ideploy.cn";
+                        _ProxyHost = "wln.io";
                     }
                 }
                 return _ProxyHost;
